@@ -11,6 +11,9 @@ plugins {
     alias(libs.plugins.compose.hotreload)
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlinx.serialization)
+
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
 }
 
 composeCompiler {
@@ -69,6 +72,15 @@ kotlin {
             implementation(libs.androidx.activityCompose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+
+            implementation("com.google.accompanist:accompanist-permissions:0.37.2")
+            implementation("androidx.camera:camera-core:1.5.0-alpha06")
+            implementation("androidx.camera:camera-camera2:1.5.0-alpha06")
+            implementation("androidx.camera:camera-compose:1.5.0-alpha06")
+            implementation("androidx.camera:camera-lifecycle:1.5.0-alpha06")
+            implementation("androidx.camera:camera-extensions:1.5.0-alpha06")
+            implementation("com.google.maps.android:maps-compose:6.6.0")
+
         }
 
         jvmMain.dependencies {
@@ -131,4 +143,9 @@ compose.desktop {
 
 tasks.register<ComposeHotRun>("runHot") {
     mainClass.set("HotrunKt")
+}
+
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
 }
