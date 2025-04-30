@@ -14,6 +14,8 @@ plugins {
 
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 
+    id("app.cash.sqldelight") version "2.0.2"
+
 }
 
 composeCompiler {
@@ -58,6 +60,9 @@ kotlin {
             implementation(libs.androidx.navigation.composee)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
+            implementation("app.cash.sqldelight:coroutines-extensions:2.0.2")
+
+
         }
 
         commonTest.dependencies {
@@ -80,17 +85,22 @@ kotlin {
             implementation("androidx.camera:camera-lifecycle:1.5.0-alpha06")
             implementation("androidx.camera:camera-extensions:1.5.0-alpha06")
             implementation("com.google.maps.android:maps-compose:6.6.0")
-
+            implementation("app.cash.sqldelight:android-driver:2.0.2")
         }
 
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.ktor.client.okhttp)
+
+            implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+
+            implementation("app.cash.sqldelight:native-driver:2.0.2")
+
         }
 
     }
@@ -114,6 +124,9 @@ android {
 
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
+    implementation(libs.protolite.well.known.types)
+    implementation(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.common.jvm)
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
 }
@@ -148,4 +161,14 @@ tasks.register<ComposeHotRun>("runHot") {
 secrets {
     propertiesFileName = "secrets.properties"
     defaultPropertiesFileName = "local.defaults.properties"
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("cat.itb.m78.exercices.db")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases"))
+            verifyMigrations.set(true)
+        }
+    }
 }

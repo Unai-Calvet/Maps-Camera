@@ -1,4 +1,4 @@
-package cat.itb.m78.exercices
+package cat.itb.m78.exercices.permissionScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,13 +18,13 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun PermissionScreen(navigateToCameraScreen : () -> Unit) {
+fun PermissionsScreen(navigateToMapScreen : () -> Unit) {
     val cameraPermissionState = rememberPermissionState(
         android.Manifest.permission.CAMERA
     )
     if (cameraPermissionState.status.isGranted) {
         Text("Camera permission Granted")
-        navigateToCameraScreen()
+        navigateToMapScreen()
     } else {
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             val textToShow = if (cameraPermissionState.status.shouldShowRationale) {

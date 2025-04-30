@@ -1,0 +1,24 @@
+CREATE TABLE marker (
+id INTEGER PRIMARY KEY NOT NULL,
+lat TEXT NOT NULL,
+lng TEXT NOT NULL,
+title TEXT,
+imageUri TEXT,
+info TEXT,
+description TEXT
+);
+
+create:
+INSERT INTO marker(lat, lng) VALUES (?, ?);
+
+readAll:
+SELECT * FROM marker;
+
+readById:
+SELECT * FROM marker WHERE id = ?;
+
+update:
+UPDATE marker SET title = ?, imageUri = ?, info = ?, description = ? WHERE id = ?;
+
+delete:
+DELETE FROM marker WHERE id = ?;
