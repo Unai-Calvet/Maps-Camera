@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,8 +33,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.itb.m78.exercices.db.Marker
+import coil3.compose.AsyncImage
 import kotlinx.coroutines.launch
 
 @Composable
@@ -110,9 +113,11 @@ fun MarkerInfoScreen(navigateToMapScreen: () -> Unit, navigateToListScreen: () -
             Spacer(modifier = Modifier.size(100.dp))
 
             if (!marker.imageUri.isNullOrEmpty()) {
-                OutlinedCard {
-                    Text(marker.imageUri)
-                }
+                AsyncImage(
+                    model = marker.imageUri.toUri(),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
 
             Spacer(modifier = Modifier.size(100.dp))

@@ -16,15 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.itb.m78.exercices.db.Marker
+import coil3.Uri
 
 @Composable
 fun EditMarkerScreen(navigateToListScreen: () -> Unit, id : Long) {
     val viewModel = viewModel { EditMarkerScreenViewModel() }
-    EditMarkerScreen(navigateToListScreen, viewModel.getMarker(id), viewModel::onClickButton)
+    EditMarkerScreen(navigateToListScreen, viewModel.getMarker(id), viewModel::onClickButton, viewModel.photoUri.collectAsState().value)
 }
 
 @Composable
-fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickButon : (Long, String, String, String, String, () -> Unit) -> Unit) {
+fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickButon : (Long, String, String, String, String, () -> Unit) -> Unit, getPhoto: () -> String) {
     val title = remember { mutableStateOf(marker.title) }
     val imageUri = remember { mutableStateOf(marker.imageUri) }
     val info = remember { mutableStateOf(marker.info) }
@@ -55,6 +56,10 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
         )
 
         Spacer(modifier = Modifier.size(100.dp))
+
+        Button(onClick = {imageUri.value = }) {
+            Text("Fer foto")
+        }
 
         OutlinedTextField(
             imageUri.value!!,

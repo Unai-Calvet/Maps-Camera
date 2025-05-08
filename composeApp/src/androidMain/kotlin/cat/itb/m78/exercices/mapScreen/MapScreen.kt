@@ -53,7 +53,7 @@ fun MapScreen(navigateToListScreen: () -> Unit, navigateToEditMarkerScreen: (Lon
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
-fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>, addMarker: (String, String, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
+fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMarker: (String, String, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val lat = mutableStateOf(currentCameraPositionState.position.target.latitude.toString())
@@ -65,7 +65,8 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>, addMarke
         drawerContent = {
             ModalDrawerSheet {
                 Column(
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
                         .verticalScroll(rememberScrollState())
                 ) {
                     Spacer(Modifier.height(12.dp))
@@ -132,11 +133,29 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>, addMarke
                 GoogleMap(
                     modifier = Modifier.fillMaxSize(),
                     cameraPositionState = cameraPositionState
-                )
-                for (marker in markers) {
+                ) {
+                    if (!markers.isNullOrEmpty()) {
+                        for (marker in markers) {
+                            AdvancedMarker(
+                                state = MarkerState(
+                                    position = LatLng(
+                                        marker.lat.toDouble(),
+                                        marker.lng.toDouble()
+                                    )
+                                ),
+                                title = marker.title
+                            )
+                        }
+                    }
+
+                    // Modificació a l'exàmen
                     AdvancedMarker(
-                        state = MarkerState(position = LatLng(marker.lat.toDouble(), marker.lng.toDouble())),
-                        title = marker.title
+                        state = MarkerState(
+                            position = LatLng(
+                                41.453047, 2.186441
+                            )
+                        ),
+                        title = "ITB"
                     )
                 }
             }
