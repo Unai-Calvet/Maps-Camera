@@ -94,6 +94,7 @@ kotlin {
             implementation("androidx.camera:camera-extensions:1.5.0-alpha06")
             implementation("com.google.maps.android:maps-compose:6.6.0")
             implementation("app.cash.sqldelight:android-driver:2.0.2")
+            implementation("androidx.startup:startup-runtime:1.2.0")
         }
 
         jvmMain.dependencies {

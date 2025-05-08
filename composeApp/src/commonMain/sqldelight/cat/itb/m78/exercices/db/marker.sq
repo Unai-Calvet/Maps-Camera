@@ -17,6 +17,9 @@ SELECT * FROM marker;
 readById:
 SELECT * FROM marker WHERE id = ?;
 
+readIdByLatLng:
+SELECT id FROM marker WHERE lat = ? AND lng = ?;
+
 update:
 UPDATE marker SET title = ?, imageUri = ?, info = ?, description = ? WHERE id = ?;
 
