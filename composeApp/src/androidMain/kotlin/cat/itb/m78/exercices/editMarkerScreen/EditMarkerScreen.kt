@@ -84,7 +84,7 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
 
         Spacer(modifier = Modifier.size(100.dp))
 
-        Button(onClick = { onClickButon(marker.id, title.value!!, imageUri.value!!, info.value!!, description.value!!, navigateToListScreen) }) {
+        Button(onClick = { onClickButon(marker.id, title.value!!, "", info.value!!, description.value!!, navigateToListScreen) }) {
             Text("Realitzar canvis")
         }
 
