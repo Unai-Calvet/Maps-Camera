@@ -54,13 +54,13 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
             }
         )
 
-        OutlinedTextField(
+        /*OutlinedTextField(
             imageUri.value!!,
             label = { Text("Image URI")},
             onValueChange = {
                 imageUri.value = it
             }
-        )
+        )*/
 
         Spacer(modifier = Modifier.size(100.dp))
 
