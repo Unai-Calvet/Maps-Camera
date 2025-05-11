@@ -28,7 +28,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -147,16 +146,6 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
                             )
                         }
                     }
-
-                    // Modificació a l'exàmen
-                    AdvancedMarker(
-                        state = MarkerState(
-                            position = LatLng(
-                                41.453047, 2.186441
-                            )
-                        ),
-                        title = "ITB"
-                    )
                 }
             }
         }

@@ -6,7 +6,6 @@ import cat.itb.m78.exercices.db.database
 
 class EditMarkerScreenViewModel : ViewModel() {
     private val markersTable = database.markerQueries
-    val photoUri = savedStateHandle.getStateFlow<String?>(PHOTO_URI_KEY, null)
 
     fun getMarker(id: Long) : Marker {
         return markersTable.readById(id).executeAsOne()
