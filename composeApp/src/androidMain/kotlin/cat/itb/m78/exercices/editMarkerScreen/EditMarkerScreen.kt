@@ -18,13 +18,18 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.itb.m78.exercices.db.Marker
 
 @Composable
-fun EditMarkerScreen(navigateToListScreen: () -> Unit, id : Long) {
+fun EditMarkerScreen(navigateToListScreen: () -> Unit, id : Long, navigateToCameraScreen : (Long) -> Unit) {
     val viewModel = viewModel { EditMarkerScreenViewModel() }
-    EditMarkerScreen(navigateToListScreen, viewModel.getMarker(id), viewModel::onClickButton)
+    EditMarkerScreen(navigateToListScreen, viewModel.getMarker(id), viewModel::onClickButton, navigateToCameraScreen, viewModel::onClickPhoto)
 }
 
 @Composable
-fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickButon : (Long, String, String, String, String, () -> Unit) -> Unit) {
+fun EditMarkerScreen(
+    navigateToListScreen: () -> Unit,
+    marker : Marker,
+    onClickButon : (Long, String, String, String, String, () -> Unit) -> Unit,
+    navigateToCameraScreen : (Long) -> Unit,
+    onClickPhoto: (String, String, String, String, Long, (Long) -> Unit) -> Unit) {
     val title = remember { mutableStateOf(marker.title) }
     val imageUri = remember { mutableStateOf(marker.imageUri) }
     val info = remember { mutableStateOf(marker.info) }
@@ -44,7 +49,7 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
     }
 
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.size(100.dp))
+        Spacer(modifier = Modifier.size(75.dp))
 
         OutlinedTextField(
             title.value!!,
@@ -54,15 +59,13 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
             }
         )
 
-        OutlinedTextField(
-            imageUri.value!!,
-            label = { Text("Image URI")},
-            onValueChange = {
-                imageUri.value = it
-            }
-        )
+        Spacer(modifier = Modifier.size(75.dp))
 
-        Spacer(modifier = Modifier.size(100.dp))
+        Button(onClick = {onClickPhoto(title.value!!, imageUri.value!!, info.value!!, description.value!!, marker.id, navigateToCameraScreen)}) {
+            Text("Fer Foto")
+        }
+
+        Spacer(modifier = Modifier.size(75.dp))
 
         OutlinedTextField(
             info.value!!,
@@ -72,7 +75,7 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
             }
         )
 
-        Spacer(modifier = Modifier.size(100.dp))
+        Spacer(modifier = Modifier.size(75.dp))
 
         OutlinedTextField(
             description.value!!,
@@ -82,7 +85,7 @@ fun EditMarkerScreen(navigateToListScreen: () -> Unit, marker : Marker, onClickB
             }
         )
 
-        Spacer(modifier = Modifier.size(100.dp))
+        Spacer(modifier = Modifier.size(75.dp))
 
         Button(onClick = { onClickButon(marker.id, title.value!!, imageUri.value!!, info.value!!, description.value!!, navigateToListScreen) }) {
             Text("Realitzar canvis")

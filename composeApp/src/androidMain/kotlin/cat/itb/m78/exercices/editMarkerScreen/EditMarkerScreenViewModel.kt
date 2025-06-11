@@ -11,6 +11,11 @@ class EditMarkerScreenViewModel : ViewModel() {
         return markersTable.readById(id).executeAsOne()
     }
 
+    fun onClickPhoto(title: String, imageUri: String, info: String, description: String, id: Long, navigateToCamera: (Long) -> Unit) {
+        updateMarker(title, imageUri, info, description, id)
+        navigateToCamera(id)
+    }
+
     fun updateMarker(title: String, imageUri: String, info: String, description: String, id: Long) {
         markersTable.update(title, imageUri, info, description, id)
     }

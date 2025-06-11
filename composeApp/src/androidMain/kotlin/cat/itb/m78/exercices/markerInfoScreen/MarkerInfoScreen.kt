@@ -102,41 +102,37 @@ fun MarkerInfoScreen(navigateToMapScreen: () -> Unit, navigateToListScreen: () -
         ) { }
 
         Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
-            Spacer(modifier = Modifier.size(100.dp))
+            Spacer(modifier = Modifier.size(50.dp))
 
             if (!marker.title.isNullOrEmpty()) {
                 OutlinedCard {
                     Text(marker.title)
                 }
+                Spacer(modifier = Modifier.size(50.dp))
             }
-
-            Spacer(modifier = Modifier.size(100.dp))
 
             if (!marker.imageUri.isNullOrEmpty()) {
                 AsyncImage(
                     model = marker.imageUri.toUri(),
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().size(500.dp)
                 )
+                Spacer(modifier = Modifier.size(50.dp))
             }
-
-            Spacer(modifier = Modifier.size(100.dp))
 
             if (!marker.info.isNullOrEmpty()) {
                 OutlinedCard {
                     Text(marker.info)
                 }
+                Spacer(modifier = Modifier.size(50.dp))
             }
-
-            Spacer(modifier = Modifier.size(100.dp))
 
             if (!marker.description.isNullOrEmpty()) {
                 OutlinedCard {
                     Text(marker.description)
                 }
+                Spacer(modifier = Modifier.size(50.dp))
             }
-
-            Spacer(modifier = Modifier.size(100.dp))
 
             Button(onClick = {navigateToEditMarkerScreen(marker.id)}) {
                 Text("Editar")

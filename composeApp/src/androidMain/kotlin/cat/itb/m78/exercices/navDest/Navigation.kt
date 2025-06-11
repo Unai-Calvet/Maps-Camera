@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import cat.itb.m78.exercices.camera.CameraScreen
 import cat.itb.m78.exercices.editMarkerScreen.EditMarkerScreen
 import cat.itb.m78.exercices.markerInfoScreen.MarkerInfoScreen
 import cat.itb.m78.exercices.listScreen.ListScreen
@@ -29,8 +30,12 @@ fun Navigation() {
             MarkerInfoScreen(navigateToMapScreen = {navController.navigate(Destination.MapScreen)}, navigateToListScreen = {navController.navigate(Destination.ListScreen)}, navigateToEditMarkerScreen = {navController.navigate(Destination.EditMarkerScreen(it))}, id = id)
         }
         composable<Destination.EditMarkerScreen> {
-            val id = it.toRoute<Destination.MarkerInfoScreen>().id
-            EditMarkerScreen(navigateToListScreen = {navController.navigate(Destination.ListScreen)}, id = id)
+            val id = it.toRoute<Destination.EditMarkerScreen>().id
+            EditMarkerScreen(navigateToListScreen = {navController.navigate(Destination.ListScreen)}, id = id, navigateToCameraScreen = {navController.navigate(Destination.CameraScreen(it))})
+        }
+        composable<Destination.CameraScreen> {
+            val id = it.toRoute<Destination.CameraScreen>().id
+            CameraScreen(navigateToList = { navController.navigate(Destination.ListScreen) }, id = id)
         }
     }
 }

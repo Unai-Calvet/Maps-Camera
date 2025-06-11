@@ -14,5 +14,7 @@ object Destination {
     data class MarkerInfoScreen(val id: Long)
     @Serializable
     data class EditMarkerScreen(val id: Long)
+    @Serializable
+    data class CameraScreen(val id: Long)
 
 }
