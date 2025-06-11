@@ -65,7 +65,7 @@ fun EditMarkerScreen(
     }
 
     Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.size(75.dp))
+        Spacer(modifier = Modifier.size(50.dp))
 
         OutlinedTextField(
             title.value!!,
@@ -75,7 +75,7 @@ fun EditMarkerScreen(
             }
         )
 
-        Spacer(modifier = Modifier.size(75.dp))
+        Spacer(modifier = Modifier.size(50.dp))
 
         if (imageUri != null) {
             AsyncImage(
@@ -93,7 +93,7 @@ fun EditMarkerScreen(
             Text("Selecionar foto")
         }
 
-        Spacer(modifier = Modifier.size(75.dp))
+        Spacer(modifier = Modifier.size(50.dp))
 
         OutlinedTextField(
             info.value!!,
@@ -103,7 +103,7 @@ fun EditMarkerScreen(
             }
         )
 
-        Spacer(modifier = Modifier.size(75.dp))
+        Spacer(modifier = Modifier.size(50.dp))
 
         OutlinedTextField(
             description.value!!,
@@ -113,7 +113,7 @@ fun EditMarkerScreen(
             }
         )
 
-        Spacer(modifier = Modifier.size(75.dp))
+        Spacer(modifier = Modifier.size(50.dp))
 
         Button(onClick = { onClickButon(marker.id, title.value!!, imageUri.value!!, info.value!!, description.value!!, navigateToListScreen) }) {
             Text("Realitzar canvis")
