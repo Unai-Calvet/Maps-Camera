@@ -27,7 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +38,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.AdvancedMarker
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MarkerState
-import com.google.maps.android.compose.currentCameraPositionState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 
@@ -55,9 +53,11 @@ fun MapScreen(navigateToListScreen: () -> Unit, navigateToEditMarkerScreen: (Lon
 fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMarker: (String, String, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val lat = mutableStateOf(currentCameraPositionState.position.target.latitude.toString())
-    val lng = mutableStateOf(currentCameraPositionState.position.target.longitude.toString())
 
+    val startPosition = LatLng(41.39, 2.16)
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(startPosition, 12f)
+    }
 
 
     ModalNavigationDrawer(
@@ -116,7 +116,7 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
         ) { }
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.size(30.dp))
-            Button(onClick = {addMarker(lat.value, lng.value, navigateToEditMarkerScreen)}) {
+            Button(onClick = {addMarker(cameraPositionState.position.target.latitude.toString(), cameraPositionState.position.target.longitude.toString(), navigateToEditMarkerScreen)}) {
                 Text("Afegir")
             }
         }
@@ -125,10 +125,6 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
             Spacer(modifier = Modifier.size(100.dp))
 
             Box {
-                val startPosition = LatLng(41.39, 2.16)
-                val cameraPositionState = rememberCameraPositionState {
-                    position = CameraPosition.fromLatLngZoom(startPosition, 12f)
-                }
                 GoogleMap(
                     modifier = Modifier.fillMaxSize(),
                     cameraPositionState = cameraPositionState
