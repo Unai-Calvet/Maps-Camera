@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -19,10 +18,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.itb.m78.exercices.db.Marker
-import coil3.compose.AsyncImage
+import com.russhwolf.settings.Settings
 
 @Composable
 fun EditMarkerScreen(navigateToListScreen: () -> Unit, id : Long, navigateToCameraScreen : (Long) -> Unit) {
@@ -54,9 +52,6 @@ fun EditMarkerScreen(
     if (title.value == null) {
         title.value = ""
     }
-    if (imageUri.value == null) {
-        imageUri.value = ""
-    }
     if (info.value == null) {
         info.value = ""
     }
@@ -77,20 +72,25 @@ fun EditMarkerScreen(
 
         Spacer(modifier = Modifier.size(50.dp))
 
-        if (imageUri != null) {
-            AsyncImage(
-                model = marker.imageUri?.toUri(),
-                contentDescription = null,
-                modifier = Modifier.fillMaxWidth().size(250.dp)
-            )
-        }
-
         Button(onClick = {onClickPhoto(title.value!!, imageUri.value!!, info.value!!, description.value!!, marker.id, navigateToCameraScreen)}) {
             Text("Fer Foto")
         }
 
         Button(onClick = {pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}) {
             Text("Selecionar foto")
+        }
+
+        Button(onClick = {
+            val settings: Settings = Settings()
+            imageUri.value = settings.getString(
+                "lastPhotoUri",
+                defaultValue = ""
+            )
+            if (imageUri.value == "") {
+                imageUri.value = null
+            }
+        }) {
+            Text("Selecionar ultima foto")
         }
 
         Spacer(modifier = Modifier.size(50.dp))

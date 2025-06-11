@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModel
 import cat.itb.m78.exercices.db.Marker
 import cat.itb.m78.exercices.db.database
 import kotlinx.coroutines.awaitCancellation
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.set
 
 
 class CameraViewModel : ViewModel(){
@@ -58,6 +60,10 @@ class CameraViewModel : ViewModel(){
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     if (output.savedUri != null) {
+
+                        val settings : Settings = Settings()
+                        settings["lastPhotoUri"] = output.savedUri?.toString()
+
                         Log.d("CameraPreview", "Photo capture succeeded: ${output.savedUri}")
                         database.markerQueries.update(marker.title, output.savedUri?.toString(), marker.info, marker.description, marker.id)
                         navigateToList()

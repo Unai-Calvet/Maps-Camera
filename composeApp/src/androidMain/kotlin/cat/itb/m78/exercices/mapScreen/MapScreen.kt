@@ -129,6 +129,14 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
                     modifier = Modifier.fillMaxSize(),
                     cameraPositionState = cameraPositionState
                 ) {
+                    AdvancedMarker(
+                        state = MarkerState(
+                            position = LatLng(
+                                41.453070, 2.186464
+                            )
+                        ),
+                        title = "ITB"
+                    )
                     if (!markers.isNullOrEmpty()) {
                         for (marker in markers) {
                             AdvancedMarker(
