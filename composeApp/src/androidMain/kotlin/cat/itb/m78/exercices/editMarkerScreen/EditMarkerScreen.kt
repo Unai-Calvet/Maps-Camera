@@ -52,6 +52,9 @@ fun EditMarkerScreen(
     if (title.value == null) {
         title.value = ""
     }
+    if (imageUri.value == null) {
+        imageUri.value = ""
+    }
     if (info.value == null) {
         info.value = ""
     }

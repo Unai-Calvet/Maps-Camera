@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.itb.m78.exercices.db.Marker
+import cat.itb.m78.exercices.db.database
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.AdvancedMarker
@@ -44,13 +45,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun MapScreen(navigateToListScreen: () -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
     val viewModel = viewModel { MapScreenViewModel() }
-    MapScreen(navigateToListScreen, viewModel.markers.value, viewModel::addMarker, navigateToEditMarkerScreen)
+    MapScreen(navigateToListScreen, viewModel.markers, viewModel::addMarker, navigateToEditMarkerScreen)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
-fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMarker: (Double, Double, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
+fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMarker: (String, String, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -116,11 +117,17 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
         ) { }
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.size(30.dp))
-            Button(onClick = {addMarker(cameraPositionState.position.target.latitude, cameraPositionState.position.target.longitude, navigateToEditMarkerScreen)}) {
+            Button(onClick = {addMarker({(cameraPositionState.position.target.latitude - 0.01)}.toString() , cameraPositionState.position.target.longitude.toString(), navigateToEditMarkerScreen)}) {
                 Text("Afegir")
             }
         }
         Column {
+
+            if (markers != null) {
+                for (marker in markers) {
+                    Text("lat ${marker.lat}, long: ${marker.lng}")
+                }
+            }
 
             Spacer(modifier = Modifier.size(100.dp))
 
@@ -139,7 +146,7 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
                     )
                     if (!markers.isNullOrEmpty()) {
                         for (marker in markers) {
-                            AdvancedMarker(
+                            /*AdvancedMarker(
                                 state = MarkerState(
                                     position = LatLng(
                                         marker.lat.toDouble(),
@@ -147,7 +154,7 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
                                     )
                                 ),
                                 title = marker.title
-                            )
+                            )*/
                         }
                     }
                 }
