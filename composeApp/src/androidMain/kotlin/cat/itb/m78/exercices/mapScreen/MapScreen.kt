@@ -50,7 +50,7 @@ fun MapScreen(navigateToListScreen: () -> Unit, navigateToEditMarkerScreen: (Lon
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
-fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMarker: (String, String, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
+fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMarker: (Double, Double, (Long) -> Unit) -> Unit, navigateToEditMarkerScreen: (Long) -> Unit) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -116,7 +116,7 @@ fun MapScreen(navigateToListScreen: () -> Unit, markers : List<Marker>?, addMark
         ) { }
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.size(30.dp))
-            Button(onClick = {addMarker(cameraPositionState.position.target.latitude.toString(), cameraPositionState.position.target.longitude.toString(), navigateToEditMarkerScreen)}) {
+            Button(onClick = {addMarker(cameraPositionState.position.target.latitude, cameraPositionState.position.target.longitude, navigateToEditMarkerScreen)}) {
                 Text("Afegir")
             }
         }

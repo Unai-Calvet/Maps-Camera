@@ -14,11 +14,11 @@ class MapScreenViewModel : ViewModel() {
         return markersTable.readAll().executeAsList()
     }
 
-    fun addMarker(lati: String, long: String, navigateToEditMarker : (Long) -> Unit) {
+    fun addMarker(lati: Double, long: Double, navigateToEditMarker : (Long) -> Unit) {
         // Examen recuperació
-        markersTable.create({lati.toDouble()-0.01}.toString(), long)
+        markersTable.create({lati - 0.01}.toString(), long.toString())
         //
-        val id = markersTable.readIdByLatLng(lati, long).executeAsOne()
+        val id = markersTable.readIdByLatLng(lati.toString(), long.toString()).executeAsOne()
         navigateToEditMarker(id)
     }
 }
