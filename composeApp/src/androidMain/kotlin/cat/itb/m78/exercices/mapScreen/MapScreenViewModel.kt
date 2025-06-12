@@ -15,7 +15,9 @@ class MapScreenViewModel : ViewModel() {
     }
 
     fun addMarker(lati: String, long: String, navigateToEditMarker : (Long) -> Unit) {
-        markersTable.create(lati, long)
+        // Examen recuperació
+        markersTable.create({lati.toLong()-0.01}.toString(), long)
+        //
         val id = markersTable.readIdByLatLng(lati, long).executeAsOne()
         navigateToEditMarker(id)
     }

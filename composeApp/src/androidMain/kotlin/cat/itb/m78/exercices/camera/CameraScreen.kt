@@ -17,10 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cat.itb.m78.exercices.db.database
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.get
 
 @Composable
 
 fun CameraScreen(navigateToList: () -> Unit, id: Long){
+    val settings : Settings = Settings()
+    val counter = settings.get("counter", 0)
     val marker = database.markerQueries.readById(id).executeAsOne()
     val viewModel = viewModel{ CameraViewModel() }
     val context = LocalContext.current
@@ -36,7 +40,7 @@ fun CameraScreen(navigateToList: () -> Unit, id: Long){
         )
         Row (modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.Center) {
             Button(onClick = { viewModel.takePhoto(context, navigateToList, marker)}){
-                Text("Fer foto")
+                Text("Fer foto, $counter fotos fetes anteriorment")
             }
             Spacer(modifier = Modifier.size(25.dp))
             Button(onClick = { navigateToList() }){

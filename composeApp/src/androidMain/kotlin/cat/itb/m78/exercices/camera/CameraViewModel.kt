@@ -20,6 +20,7 @@ import cat.itb.m78.exercices.db.Marker
 import cat.itb.m78.exercices.db.database
 import kotlinx.coroutines.awaitCancellation
 import com.russhwolf.settings.Settings
+import com.russhwolf.settings.get
 import com.russhwolf.settings.set
 
 
@@ -66,6 +67,10 @@ class CameraViewModel : ViewModel(){
 
                         Log.d("CameraPreview", "Photo capture succeeded: ${output.savedUri}")
                         database.markerQueries.update(marker.title, output.savedUri?.toString(), marker.info, marker.description, marker.id)
+                        //Examen Recuperació
+                        val counter = settings.get("counter", 0)
+                        settings["counter"] = counter + 1
+                        //
                         navigateToList()
                     }
                 }
